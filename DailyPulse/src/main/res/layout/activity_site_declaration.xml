@@ -1,0 +1,77 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layerType="software"
+    android:orientation="vertical"
+    android:padding="10dp">
+
+    <include
+        android:id="@+id/toolbar_actionbar"
+        layout="@layout/app_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="0dp"
+        android:text="@string/question_country" />
+
+    <RadioGroup
+        android:id="@+id/radioCountry"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/site_customer"
+            android:layout_width="160dp"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:text="@string/site_sweden" />
+
+        <RadioButton
+            android:id="@+id/site_dek"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/site_vietnam" />
+
+    </RadioGroup>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:text="@string/question_site" />
+
+    <RadioGroup
+        android:id="@+id/radioOffice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/radioDekSite"
+            android:layout_width="160dp"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:text="DEK's office" />
+
+        <RadioButton
+            android:id="@+id/radioCustomerSite"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Customer's office" />
+
+    </RadioGroup>
+
+    <Button
+        android:id="@+id/bSubmit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:layout_marginBottom="25dp"
+        android:onClick="onClick"
+        android:text="Submit" />
+
+</LinearLayout>

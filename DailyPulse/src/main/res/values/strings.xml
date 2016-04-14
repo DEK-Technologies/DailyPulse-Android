@@ -1,0 +1,75 @@
+<resources>
+    <string name="app_name">Daily Pulse</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_login">Login</string>
+    <string name="title_activity_vote">Vote</string>
+    <string name="mood_question">How did you feel at work today?</string>
+
+    <string name="login_username">Username<font color='#FF0000'>*</font></string>
+    <string name="login_password">Password<font color='#FF0000'>*</font></string>
+
+    <string name="site_question">Do you work at a Customer\'s building or at DEK Building?<font color='#FF0000'>*</font></string>
+    <string name="site_sweden">Sweden</string>
+    <string name="site_vietnam">Vietnam</string>
+    <string name="site_customer_office">Customer Office</string>
+    <string name="site_dek_office">DEK Office</string>
+
+    <string name="login_text_view_hint">Your Celpax account\'s username and password:<font color='#FF0000'>*</font></string>
+    <string name="question_country">Do you work at DEK Sweden or DEK Vietnam?<font color='#FF0000'>*</font></string>
+    <string name="question_site">Do you work at DEK\'s office or at customer\'s office?<font color='#FF0000'>*</font></string>
+    <string name="tv_Create_new_account">Create a new account</string>
+    <string name="tv_forgot_password">Forgot my password</string>
+    <string name="ic_action_vote">Vote</string>
+    <string name="sign_out">Sign Out</string>
+    <string name="user_account">Account</string>
+    <string name="results">Result</string>
+    <string name="about">About</string>
+
+    <string name="account_tv_site_description_str">On Celpax server you are registered as:\n</string>
+    <string name="account_tv_hint_for_change">Below you can change the office you vote for</string>
+    <string name="account_customer_office">Customer\'s office</string>
+    <string name="account_main_office">Main Office</string>
+    <string name="account_bt_result_page">Back to Result Page</string>
+
+
+    <string name="about_app">
+  <![CDATA[
+    <small>
+    <p><b>Developed by:</b> DEK Technologies Sweden AB.<br/></p>
+
+    <p><b>Contact:</b> info-se@dektech.com.au<br/></p>
+
+    <p><b>Copyright (&#169) 2016 DEK Technologies Sweden AB.</b>
+    <a href="http://www.gnu.org/licenses/gpl-3.0.en.html">GNU GENERAL PUBLIC LICENSE Version
+    3</a><br/></p>
+
+    <p><b>How this was developed:</b> At DEK Technologies we use a hardware voting panel named
+    DailyPulse for having employees vote for how they feel on a certain day.
+    DailyPulse is made by Celpax company reachable at <a href="http://www.celpax.com/">
+    http://www.celpax.com/</a><br/></p>
+
+    <p><b>User Guide</b><br/>
+    You are meant to vote only once during a given day. In case you vote more than once, the app
+    would only know that this is not your first time voting.<br/>
+    If not successful - In case the vote you submit via this mobile application fails to be sent,
+    for example in case you are disconnected from Internet, your vote will be stored to be sent
+    with the next vote that you will submit. Once your vote is submitted successfully, the app
+    would not store the user\'s vote on the mobile, and will erase the records.</p>
+
+
+    <p><b>Privacy</b><br/>
+
+    This app does not aim to disclose your identity while voting. As our users\' privacy is of
+    utmost non-negotiable nature to us.<br/>We at DEK Technologies AB Sweden have queried Celpax if
+    they can link users\' votes with their identity later to track who has voted, who has voted
+    happy or sad. Celpax directed us to their privacy policy on their website and sated that they
+    do not store in any manner any information that can later on be used to link users\' identity
+    with your activities and votes.<br/>
+
+    Celpax\'s Policy - To view the privacy policy of Celpax, visit their website at
+    <a href="http://www.celpax.com/celpax-privacy-guarantee/">this</a> link.</p>
+
+    </small>
+  ]]>
+    </string>
+</resources>

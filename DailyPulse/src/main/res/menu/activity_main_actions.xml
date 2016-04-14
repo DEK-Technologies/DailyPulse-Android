@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/action_show_results"
+        android:title="@string/results" />
+
+    <item
+        android:id="@+id/action_show_about"
+        android:title="@string/about"
+        android:icon="@drawable/chart"/>
+
+    <item
+        android:id="@+id/action_account"
+        android:title="@string/user_account" />
+
+    <item
+        android:id="@+id/action_vote"
+        android:icon="@drawable/vote"
+        android:title="Chart"
+        android:contentInsetLeft="0dp"
+        app:contentInsetLeft="0dp"
+        app:contentInsetStart="0dp"
+        app:showAsAction="always|withText" />
+<!--
+    <item
+        android:id="@+id/action_result"
+        android:icon="@drawable/chart"
+        android:title="Chart"
+        android:contentInsetLeft="0dp"
+        app:contentInsetLeft="0dp"
+        app:contentInsetStart="0dp"
+        app:showAsAction="always|withText" />
+
+    <item
+        android:id="@+id/action_account"
+        android:icon="@drawable/settings"
+        android:title="Chart"
+        android:contentInsetLeft="0dp"
+        app:contentInsetLeft="0dp"
+        app:contentInsetStart="0dp"
+        app:showAsAction="always|withText" />
+-->
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:text="@string/mood_question"
+        android:textSize="20dp" />
+
+</menu>

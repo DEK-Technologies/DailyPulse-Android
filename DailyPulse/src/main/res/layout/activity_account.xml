@@ -1,0 +1,69 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layerType="software"
+    android:orientation="vertical"
+    android:padding="10dp">
+
+    <include
+        android:id="@+id/app_bar"
+        layout="@layout/app_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/tv_account_tv_site_description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textIsSelectable="true"
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/tv_"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:textIsSelectable="true"
+        android:textSize="15sp"
+        android:text="@string/account_tv_hint_for_change" />
+
+    <RadioGroup
+        android:id="@+id/rb_main_office_Or_customer_office"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/radioDekSite"
+            android:layout_width="160dp"
+            android:layout_height="wrap_content"
+            android:checked="false"
+            android:text="@string/account_main_office" />
+
+        <RadioButton
+            android:id="@+id/radioCustomerSite"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="false"
+            android:text="@string/account_customer_office" />
+
+    </RadioGroup>
+
+    <Button
+        android:id="@+id/b_result"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="25dp"
+        android:text="@string/account_bt_result_page" />
+
+    <Button
+        android:id="@+id/b_sign_out"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="30dp"
+        android:textColor="@android:color/holo_red_dark"
+        android:text="@string/sign_out" />
+
+</LinearLayout>
