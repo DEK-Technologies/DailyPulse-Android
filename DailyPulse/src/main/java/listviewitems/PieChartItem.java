@@ -99,8 +99,8 @@ public class PieChartItem extends ChartItem {
             public void onValueSelected(Entry entry, int i, Highlight highlight) {
                 if (entry == null)
                     return;
-                final String[] xData = {"Happy", "Unhappy"};
-                Toast.makeText(c, entry.getVal() + "%" + " of " + userLocalStore.getUserCategory() + " are " + xData[entry.getXIndex()]
+                final String[] xData = {"happy", "unhappy"};
+                Toast.makeText(c, entry.getVal() + "%" + " of " + userLocalStore.getUserCategory() + " voted " + xData[entry.getXIndex()]
                         , Toast.LENGTH_SHORT).show();
                 if (entry.getVal() < 0) {
                     Toast.makeText(c, "Minus values show that there has been not enough " +

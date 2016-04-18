@@ -41,7 +41,7 @@ public class UserLocalStore {
 
     public void setCredentials(String secret_access_key, String access_key_id,
                                String PANEL_ID_SWEDEN_MOBILE, String PANEL_ID_SWEDEN_DEK,
-                               String PANEL_ID_VIETNAM,
+                               String PANEL_ID_VIETNAM_DEK, String PANEL_ID_VIETNAM_MOBILE,
                                String url_api_endpoint, String url_west_endpoint,
                                String url_register, String url_get_sites,
                                String url_submission_request, String url_vote,
@@ -52,7 +52,8 @@ public class UserLocalStore {
         spEditor.putString("ACCESS_KEY_ID", access_key_id);
         spEditor.putString("PANEL_ID_SWEDEN_MOBILE", PANEL_ID_SWEDEN_MOBILE);
         spEditor.putString("PANEL_ID_SWEDEN_DEK", PANEL_ID_SWEDEN_DEK);
-        spEditor.putString("PANEL_ID_VIETNAM", PANEL_ID_VIETNAM);
+        spEditor.putString("PANEL_ID_VIETNAM_DEK", PANEL_ID_VIETNAM_DEK);
+        spEditor.putString("PANEL_ID_VIETNAM_MOBILE", PANEL_ID_VIETNAM_MOBILE);
 
         spEditor.putString("URL_API_ENDPOINT", url_api_endpoint);
         spEditor.putString("URL_WEST_ENDPOINT", url_west_endpoint);
@@ -112,7 +113,7 @@ public class UserLocalStore {
     public String getPanelId() {
         String userPanel = "";
         if (getUserCategory().equals("DEK Vietnam")) {
-            userPanel = "PANEL_ID_VIETNAM";
+            userPanel = "PANEL_ID_VIETNAM_DEK";
         } else if (getUserCategory().equals("Vietnam Mobile Employees")) {
             userPanel = "PANEL_ID_VIETNAM_MOBILE";
         } else if (getUserCategory().equals("DEK Sweden")) {

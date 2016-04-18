@@ -33,7 +33,7 @@ public class Config {
             json = new String(buffer, "UTF-8");
 
             String SECRET_ACCESS_KEY, ACCESS_KEY_ID, PANEL_ID_SWEDEN_MOBILE, PANEL_ID_SWEDEN_DEK,
-                    PANEL_ID_VIETNAM, URL_API_ENDPOINT, URL_WEST_ENDPOINT, URL_REGISTER,
+                    PANEL_ID_VIETNAM_MOBILE, PANEL_ID_VIETNAM_DEK, URL_API_ENDPOINT, URL_WEST_ENDPOINT, URL_REGISTER,
                     URL_GET_SITES, URL_SUBMISSION_REQUEST, URL_VOTE, URL_MOOD_KPI;
 
             JSONObject jsonObject = new JSONObject(json);
@@ -42,7 +42,8 @@ public class Config {
             ACCESS_KEY_ID = jsonObject.getString("ACCESS_KEY_ID");
             PANEL_ID_SWEDEN_MOBILE = jsonObject.getString("PANEL_ID_SWEDEN_MOBILE");
             PANEL_ID_SWEDEN_DEK = jsonObject.getString("PANEL_ID_SWEDEN_DEK");
-            PANEL_ID_VIETNAM = jsonObject.getString("PANEL_ID_VIETNAM");
+            PANEL_ID_VIETNAM_DEK = jsonObject.getString("PANEL_ID_VIETNAM_DEK");
+            PANEL_ID_VIETNAM_MOBILE = jsonObject.getString("PANEL_ID_VIETNAM_MOBILE");
 
             URL_API_ENDPOINT = jsonObject.getString("URL_API_ENDPOINT");
             URL_WEST_ENDPOINT = jsonObject.getString("URL_WEST_ENDPOINT");
@@ -60,17 +61,18 @@ public class Config {
                     ", URL_VOTE: " + URL_VOTE + ", URL_MOOD_KPI: " + URL_MOOD_KPI);*/
 
             if ((SECRET_ACCESS_KEY != null || ACCESS_KEY_ID != null || PANEL_ID_SWEDEN_MOBILE
-                    != null || PANEL_ID_SWEDEN_DEK != null || PANEL_ID_VIETNAM != null
-                    || URL_API_ENDPOINT != null || URL_WEST_ENDPOINT != null || URL_REGISTER != null
-                    || URL_GET_SITES != null || URL_SUBMISSION_REQUEST != null || URL_VOTE != null
-                    || URL_MOOD_KPI != null)) {
+                    != null || PANEL_ID_SWEDEN_DEK != null || PANEL_ID_VIETNAM_DEK != null
+                    || PANEL_ID_VIETNAM_MOBILE != null || URL_API_ENDPOINT != null
+                    || URL_WEST_ENDPOINT != null || URL_REGISTER != null || URL_GET_SITES != null
+                    || URL_SUBMISSION_REQUEST != null || URL_VOTE != null || URL_MOOD_KPI != null)){
 
                 userLocalStore.setCredentials(
                         SECRET_ACCESS_KEY,
                         ACCESS_KEY_ID,
                         PANEL_ID_SWEDEN_MOBILE,
                         PANEL_ID_SWEDEN_DEK,
-                        PANEL_ID_VIETNAM,
+                        PANEL_ID_VIETNAM_DEK,
+                        PANEL_ID_VIETNAM_MOBILE,
 
                         URL_API_ENDPOINT,
                         URL_WEST_ENDPOINT,
