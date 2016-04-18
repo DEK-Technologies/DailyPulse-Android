@@ -206,9 +206,9 @@ public class Result extends AppCompatActivity {
         ArrayList<ChartItem> list = new ArrayList<>();
         ListView lv = (ListView) findViewById(R.id.listView1);
 
-        list.add(new BarChartItem(generateDataBar(), getApplicationContext()));
-
         list.add(new PieChartItem(generateDataPie(userLocalStore.getUserSiteIndex()), getApplicationContext()));
+
+        list.add(new BarChartItem(generateDataBar(), getApplicationContext()));
 
         ChartDataAdapter cda = new ChartDataAdapter(getApplicationContext(), list);
         lv.setAdapter(cda);

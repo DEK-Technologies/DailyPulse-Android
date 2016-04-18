@@ -69,10 +69,9 @@ public class PieChartItem extends ChartItem {
         holder.chart.setRotationEnabled(true);
         holder.chart.setHighlightPerTapEnabled(true);
 
-        holder.chart.setHoleRadius(63f);
+        holder.chart.setHoleRadius(58f);
         holder.chart.setTransparentCircleRadius(61f);
         holder.chart.setCenterText(mCenterText);
-/*        holder.chart.setCenterTextTypeface(mTf);*/
         holder.chart.setCenterTextSize(9f);
         holder.chart.setUsePercentValues(true);
         holder.chart.setExtraOffsets(5, 10, 50, 10);
