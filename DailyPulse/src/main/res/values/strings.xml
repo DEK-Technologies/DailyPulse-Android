@@ -3,10 +3,13 @@
     <string name="action_settings">Settings</string>
     <string name="title_activity_login">Login</string>
     <string name="title_activity_vote">Vote</string>
-    <string name="mood_question">How did you feel at work today?</string>
 
     <string name="login_username">Username<font color='#FF0000'>*</font></string>
     <string name="login_password">Password<font color='#FF0000'>*</font></string>
+
+    <string name="vote_mood_question">How did you feel at work today?</string>
+    <string name="vote_bt_result_page">Back to Result Page</string>
+    <string name="vote_bt_get_submission_id_again">Get a new submission ID</string>
 
     <string name="site_question">Do you work at a Customer\'s building or at DEK Building?<font color='#FF0000'>*</font></string>
     <string name="site_sweden">Sweden</string>
@@ -30,7 +33,6 @@
     <string name="account_customer_office">Customer\'s office</string>
     <string name="account_main_office">Main Office</string>
     <string name="account_bt_result_page">Back to Result Page</string>
-
 
     <string name="about_app">
   <![CDATA[

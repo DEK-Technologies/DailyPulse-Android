@@ -73,6 +73,10 @@ public class Result extends AppCompatActivity {
             Intent intent = new Intent(this, Login.class);
             finish();
             startActivity(intent);
+        } else if (userLocalStore.getUserCategory().equals("")) {
+            Toast.makeText(getApplicationContext(), "Please choose your site first!", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(this, DeclareSite.class);
+            startActivity(intent);
         }
 
         setContentView(R.layout.activity_result);

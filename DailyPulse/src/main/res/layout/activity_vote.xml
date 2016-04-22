@@ -15,13 +15,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
-        android:text="@string/mood_question"
+        android:layout_gravity="center"
+        android:text="@string/vote_mood_question"
         android:textSize="20dp" />
 
     <ImageButton
         android:id="@+id/happyImageButton"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
         android:layout_gravity="center"
         android:layout_marginTop="15dp"
         android:adjustViewBounds="true"
@@ -32,8 +33,8 @@
 
     <ImageButton
         android:id="@+id/sadImageButton"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
         android:layout_gravity="center"
         android:layout_marginTop="25dp"
         android:adjustViewBounds="true"
@@ -47,8 +48,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-         android:layout_marginTop="30dp"
-        android:layout_marginBottom="25dp"
-        android:text="@string/account_bt_result_page" />
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="10dp"
+        android:text="@string/vote_bt_result_page" />
+
+    <Button
+        android:id="@+id/b_get_submission_id_again"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="@string/vote_bt_get_submission_id_again" />
 
 </LinearLayout>

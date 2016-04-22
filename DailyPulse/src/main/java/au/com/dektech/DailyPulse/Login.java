@@ -1,6 +1,7 @@
 package au.com.dektech.DailyPulse;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -37,12 +38,6 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
 
     String URL_REGISTER, SECRET_ACCESS_KEY, ACCESS_KEY_ID, URL_GET_SITES, URL_API_ENDPOINT,
             URL_SUBMISSION_REQUEST, URL_WEST_ENDPOINT;
-
-    /**
-     * ATTENTION: This was auto-generated to implement the App Indexing API.
-     * See https://g.co/AppIndexing/AndroidStudio for more information.
-     */
-    private GoogleApiClient client;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -110,13 +105,22 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                     // When Email entered is Valid
                     if (Utility.validate(email)) {
                         // Invoke RESTful Web Service with Http parameters
-                        invokeWSLogin(email, password);
 
-                        if (userLocalStore.getUserLogInStatus() == true) {
-                            User user = new User(null, null);
-                            userLocalStore.storeUserData(user);
-                            Intent intent = new Intent(this, DeclareSite.class);
-                            startActivity(intent);
+                        User user = new User(email, password);
+                        //userLocalStore.storeUserData(user);
+                        userLocalStore.storeUserDataInString(email, password);
+
+                        prgDialog.show();
+
+                        WSLogin wsLogin = new WSLogin();
+                        wsLogin.invokeWSLogin(getApplicationContext());
+                        //invokeWSLogin(getApplicationContext());
+
+                        Log.i("LoginActivity", "DailyPulse.onClick(): bLogin - userLocalStore.getUserLogInStatus(): " + userLocalStore.getUserLogInStatus() /*+
+                                ", wsLogin.isLogginSuccessful(): " + wsLogin.getLogginStatus()*/);
+
+                        if (userLocalStore.getUserLogInStatus() == true /*|| wsLogin.getLoginStatus()*/) {
+                            invokeWSGetSites();
                         }
                     }
                     // When Email is invalid
@@ -134,22 +138,19 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         }
     }
 
-    /**
-     * Method that performs RESTful webservice invocations
-     *
-     * @param username The username in plaintext
-     * @param password The password in plaintext
-     */
-    protected void invokeWSLogin(String username, String password) {
+    protected void invokeWSLogin(Context context) {
 
         // Show Progress Dialog
         prgDialog.show();
 
         AsyncHttpClient client = new AsyncHttpClient();
         RequestParams params = new RequestParams();
-        params.put("j_username", username);
-        params.put("j_password", password);
+        User user = userLocalStore.getLoggedInUser();
+        params.put("j_username", user.username);
+        params.put("j_password", user.password);
         params.put("remember_me", "false");
+
+        Log.i("LoginActivity", "DailyPulse.onClick(): bLogin - clicked! user.username: " + user.username + ", user.password: " + user.password);
 
         int DEFAULT_TIMEOUT = 5000;
         client.setTimeout(DEFAULT_TIMEOUT);
@@ -273,6 +274,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable
                     throwable, JSONArray errorResponse) {
+                prgDialog.hide();
                 Log.w("LoginActivity", "DailyPulse - OnFailure: Error code in response from the server: "
                         + statusCode + "\n, errorResponse:\t" + errorResponse);
                 super.onFailure(statusCode, headers, throwable, errorResponse);
@@ -281,13 +283,16 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
             @Override
             public void onFailure(int statusCode, Header[] headers, String
                     responseString, Throwable throwable) {
+                prgDialog.hide();
                 Log.w("LoginActivity", "DailyPulse - OnFailure: Error code in response from the server: "
                         + statusCode + "\n, errorResponse:\t" + responseString);
                 super.onFailure(statusCode, headers, responseString, throwable);
+
             }
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, String responseString) {
+                prgDialog.hide();
                 super.onSuccess(statusCode, headers, responseString);
             }
         });

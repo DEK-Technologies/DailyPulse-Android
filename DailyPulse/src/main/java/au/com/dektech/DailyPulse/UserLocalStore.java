@@ -39,6 +39,30 @@ public class UserLocalStore {
         spEditor.commit();
     }
 
+    public void storeUserDataInString(String username, String password) {
+        SharedPreferences.Editor spEditor = userLocalDatabase.edit();
+        spEditor.putString("USERNAME", username);
+        spEditor.putString("PASSWORD", password);
+        spEditor.commit();
+        Log.i("userLocalStore", "storeUserDataInString() - USERNAME: " + userLocalDatabase.getString("USERNAME", "") + ", PASSWORD:" + userLocalDatabase.getString("PASSWORD", ""));
+
+    }
+
+    public String[] getLoggedInUserInString() {
+        String[] loggedInUserInStr = new String[2];
+        loggedInUserInStr[0] = userLocalDatabase.getString("USERNAME", "");
+        loggedInUserInStr[1] = userLocalDatabase.getString("PASSWORD", "");
+        return loggedInUserInStr;
+    }
+
+
+    public User getLoggedInUser() {
+        String username = userLocalDatabase.getString("USERNAME", "");
+        String password = userLocalDatabase.getString("PASSWORD", "");
+        User storedUser = new User(username, password);
+        return storedUser;
+    }
+
     public void setCredentials(String secret_access_key, String access_key_id,
                                String PANEL_ID_SWEDEN_MOBILE, String PANEL_ID_SWEDEN_DEK,
                                String PANEL_ID_VIETNAM_DEK, String PANEL_ID_VIETNAM_MOBILE,
@@ -64,15 +88,6 @@ public class UserLocalStore {
         spEditor.putString("URL_MOOD_KPI", url_mood_kpi);
         spEditor.commit();
 
-    }
-
-    public User getLoggedInUser() {
-        String username = userLocalDatabase.getString("USERNAME", "");
-        String password = userLocalDatabase.getString("PASSWORD", "");
-
-        User storedUser = new User(username, password);
-
-        return storedUser;
     }
 
     public void setUserLogInStatus(boolean logged_in_flag) {
@@ -442,4 +457,5 @@ public class UserLocalStore {
     public boolean getUserCategoryRecentlyChanged() {
         return (userLocalDatabase.getBoolean("USER_CATEGORY_RECENTLY_CHANGED", false));
     }
+
 }

@@ -10,6 +10,9 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.LinearInterpolator;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Toast;
@@ -41,9 +44,7 @@ public class Vote extends AppCompatActivity {
 
     ProgressDialog prgDialog;
 
-    Button bResult;
-
-    private GoogleApiClient client;
+    Button bResult, bGetSubmissionId;
 
     String URL_VOTE, URL_API_ENDPOINT, ACCESS_KEY_ID, PANEL_ID, SECRET_ACCESS_KEY;
 
@@ -54,13 +55,13 @@ public class Vote extends AppCompatActivity {
         setContentView(R.layout.activity_vote);
 
         bResult = (Button) findViewById(R.id.b_result);
-
+        bGetSubmissionId = (Button) findViewById(R.id.b_get_submission_id_again);
+        bGetSubmissionId.setVisibility(View.GONE);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_actionbar);
         setSupportActionBar(toolbar);
         toolbar.setNavigationIcon(R.drawable.dailypulse);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
-        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
 
         imageButtonHappy = (ImageButton) findViewById(R.id.happyImageButton);
         imageButtonSad = (ImageButton) findViewById(R.id.sadImageButton);
@@ -79,7 +80,6 @@ public class Vote extends AppCompatActivity {
         PANEL_ID = userLocalStore.getPanelId();
         URL_VOTE = userLocalStore.getUrlVote();
         URL_API_ENDPOINT = userLocalStore.getUrlApiEndpoint();
-
 
         imageButtonHappy.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -123,6 +123,10 @@ public class Vote extends AppCompatActivity {
         if (authenticate() == false) {
             Toast.makeText(getApplicationContext(), "Please first login!", Toast.LENGTH_LONG).show();
             Intent intent = new Intent(this, Login.class);
+            startActivity(intent);
+        } else if (userLocalStore.getUserCategory().equals("")) {
+            Toast.makeText(getApplicationContext(), "Please choose your site first!", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(this, DeclareSite.class);
             startActivity(intent);
         }
     }
@@ -196,6 +200,7 @@ public class Vote extends AppCompatActivity {
                 // Save this vote that failed to be sent so it would be sent with next vote
                 userLocalStore.saveLastUnsuccessfulVoteArray(votesArray.toString());
                 Toast.makeText(getApplicationContext(), "Error!\nCould not submit the vote!", Toast.LENGTH_SHORT).show();
+                enableGettingSubmissionId();
             }
 
             @Override
@@ -211,6 +216,24 @@ public class Vote extends AppCompatActivity {
                             (header.getName() + ", value: " + header.getValue()) + "\n");
                 }
                 navigateToResultActivity();
+            }
+        });
+    }
+
+    private void enableGettingSubmissionId() {
+        bGetSubmissionId.setVisibility(View.VISIBLE);
+        final Animation animation = new AlphaAnimation(1, 0); // Change alpha from fully visible to invisible
+        animation.setDuration(500); // duration - half a second
+        animation.setInterpolator(new LinearInterpolator()); // do not alter animation rate
+        animation.setRepeatCount(Animation.INFINITE); // Repeat animation infinitely
+        animation.setRepeatMode(Animation.REVERSE); // Reverse animation at the end so the button will fade back in
+        bGetSubmissionId.startAnimation(animation);
+        bGetSubmissionId.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(final View view) {
+                view.clearAnimation();
+                WSLogin wsLogin = new WSLogin();
+                wsLogin.invokeWSLogin(getApplicationContext());
             }
         });
     }
