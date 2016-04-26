@@ -37,8 +37,6 @@ public class UserLocalStore {
         spEditor.putString("USERNAME", user.username);
         spEditor.putString("PASSWORD", user.password);
         spEditor.commit();
-        Log.i("userLocalStore", "storeUserData() - USERNAME: " + userLocalDatabase.getString("USERNAME", "") + ", PASSWORD:" + userLocalDatabase.getString("PASSWORD", "") +
-        "\nAnd this was: ");
     }
 
     public void storeUserDataInString(String username, String password) {
@@ -46,15 +44,12 @@ public class UserLocalStore {
         spEditor.putString("USERNAME", username);
         spEditor.putString("PASSWORD", password);
         spEditor.commit();
-        Log.i("userLocalStore", "storeUserDataInString() - USERNAME: " + userLocalDatabase.getString("USERNAME", "") + ", PASSWORD:" + userLocalDatabase.getString("PASSWORD", ""));
-
     }
 
     public String[] getLoggedInUserInString() {
         String[] loggedInUserInStr = new String[2];
         loggedInUserInStr[0] = userLocalDatabase.getString("USERNAME", "");
         loggedInUserInStr[1] = userLocalDatabase.getString("PASSWORD", "");
-        Log.i("userLocalStore", "getLoggedInUserInString() - USERNAME: " + userLocalDatabase.getString("USERNAME", "") + ", PASSWORD:" + userLocalDatabase.getString("PASSWORD", ""));
         return loggedInUserInStr;
     }
 
@@ -62,7 +57,6 @@ public class UserLocalStore {
         String username = userLocalDatabase.getString("USERNAME", "");
         String password = userLocalDatabase.getString("PASSWORD", "");
         User storedUser = new User(username, password);
-        Log.i("userLocalStore", "getLoggedInUser() - USERNAME: " + userLocalDatabase.getString("USERNAME", "") + ", PASSWORD:" + userLocalDatabase.getString("PASSWORD", ""));
         return storedUser;
     }
 

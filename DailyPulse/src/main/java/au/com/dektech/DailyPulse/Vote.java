@@ -18,8 +18,6 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.celpax.urlsign.URLSigner;
-import com.google.android.gms.appindexing.AppIndex;
-import com.google.android.gms.common.api.GoogleApiClient;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 
@@ -33,8 +31,6 @@ import cz.msebera.android.httpclient.message.BasicHeader;
 import cz.msebera.android.httpclient.protocol.HTTP;
 
 public class Vote extends AppCompatActivity {
-
-    // private Toolbar toolbar;
 
     private static Context context;
 

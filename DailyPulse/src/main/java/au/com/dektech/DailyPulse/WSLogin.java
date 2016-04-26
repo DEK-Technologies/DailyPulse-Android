@@ -3,8 +3,6 @@ package au.com.dektech.DailyPulse;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.provider.ContactsContract;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -29,15 +27,6 @@ public class WSLogin extends Activity{
         this.context = context;
     }
 
-/*
-    public WSLogin() {
-        isLogginSuccessful = false;
-    }
-
-    public boolean getLoginStatus(){
-        return isLogginSuccessful;
-    }*/
-
     /**
      * Method that performs RESTful webservice invocations
      *
@@ -47,10 +36,6 @@ public class WSLogin extends Activity{
         final UserLocalStore userLocalStore = new UserLocalStore(context);
 
         User user = userLocalStore.getLoggedInUser();
-        String[] loggedInUserInStr = userLocalStore.getLoggedInUserInString();
-
-        Log.v("WSLogin", "DailyPulse.onClick(): bLogin - clicked! user.password: " + user.password + ", user.username: " + user.username +
-        "\nloggedInUserInStr[0]: " + loggedInUserInStr[0] + ", loggedInUserInStr[1]: " + loggedInUserInStr[1]);
 
         if(user.password.equals("") || user.username.equals("")) {
             Log.e("WSLogin", "DailyPulse.onClick(): bLogin - clicked! user.password: " + user.password + ", user.username: " + user.username);
@@ -158,8 +143,6 @@ public class WSLogin extends Activity{
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
-                // Hide Progress Dialog
-                /*prgDialog.hide();*/
                 Log.i("LoginActivity", "DailyPulse - Success " +
                         "response from the server: " + statusCode + "\nand response is:\t" +
                         response.toString());
@@ -167,19 +150,12 @@ public class WSLogin extends Activity{
                 userLocalStore.setSiteIDs(response);
 
                 navigateToDeclareSiteActivity();
-/*
-                Intent declareSiteIntent = new Intent(context, DeclareSite.class);
-                declareSiteIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(declareSiteIntent);
-*/
             }
 
             // When the response returned by REST has Http response code other than '200'
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable
                     e, org.json.JSONObject errorResponse) {
-                // Hide Progress Dialog
-                /*prgDialog.hide();*/
                 Log.w("ResultActivity", "DailyPulse.onClick(): OnFailure - clicked! Error code in response from the server: "
                         + statusCode + "\n, errorResponse:\t" + errorResponse);
 
@@ -224,9 +200,6 @@ public class WSLogin extends Activity{
      * Method which navigates from Login Activity to Home Activity
      */
     public void navigateToDeclareSiteActivity() {
-        /*Intent resultIntent = new Intent(context, DeclareSite.class);*/
-
-        /*startActivity(new Intent(context, DeclareSite.class));*/
         Intent intent = new Intent(context, DeclareSite.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
