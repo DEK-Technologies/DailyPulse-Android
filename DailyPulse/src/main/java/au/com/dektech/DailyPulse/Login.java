@@ -110,18 +110,52 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                         //userLocalStore.storeUserData(user);
                         userLocalStore.storeUserDataInString(email, password);
 
+                        //Create a Thread for this.
                         prgDialog.show();
 
-                        WSLogin wsLogin = new WSLogin();
-                        wsLogin.invokeWSLogin(getApplicationContext());
+                        WSLogin wsLogin = new WSLogin(getApplicationContext());
+
+                        wsLogin.invokeWSLogin();
+
+                        /*while (! userLocalStore.getUserLogInStatus()) {
+
+                            try {
+                                Thread.sleep(100);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                        invokeWSGetSites();*/
+
                         //invokeWSLogin(getApplicationContext());
+
+
+/*                        Thread t1 = new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                                while (! userLocalStore.getUserLogInStatus()){
+                                    try {
+                                        wait();
+                                    } catch (InterruptedException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                                invokeWSGetSites();
+                            }
+                        });
+
+                        t1.start();*/
 
                         Log.i("LoginActivity", "DailyPulse.onClick(): bLogin - userLocalStore.getUserLogInStatus(): " + userLocalStore.getUserLogInStatus() /*+
                                 ", wsLogin.isLogginSuccessful(): " + wsLogin.getLogginStatus()*/);
 
-                        if (userLocalStore.getUserLogInStatus() == true /*|| wsLogin.getLoginStatus()*/) {
+/*
+                        if (userLocalStore.getUserLogInStatus() == true */
+/*|| wsLogin.getLoginStatus()*//*
+) {
                             invokeWSGetSites();
                         }
+*/
                     }
                     // When Email is invalid
                     else {
@@ -138,7 +172,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         }
     }
 
-    protected void invokeWSLogin(Context context) {
+/*    protected void invokeWSLogin(Context context) {
 
         // Show Progress Dialog
         prgDialog.show();
@@ -215,8 +249,9 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                 Log.e("LoginActivity", "Unexpected Error occurred with code " + statusCode + ". [Most common Error: Device might not be connected to Internet or remote server is not up and running]");
             }
         });
-    }
+    }*/
 
+/*
     protected void invokeWSGetSites() {
         AsyncHttpClient client = new AsyncHttpClient();
 
@@ -297,4 +332,5 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
             }
         });
     }
+*/
 }

@@ -1,13 +1,19 @@
 package au.com.dektech.DailyPulse;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.provider.ContactsContract;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.celpax.urlsign.URLSigner;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -16,25 +22,27 @@ import cz.msebera.android.httpclient.Header;
 /**
  * Created by Alireza on 2016-04-18.
  */
-public class WSLogin {
+public class WSLogin extends Activity{
 
-    private boolean isLogginSuccessful;
+    private Context context;
+    public WSLogin (Context context) {
+        this.context = context;
+    }
 
+/*
     public WSLogin() {
         isLogginSuccessful = false;
     }
 
     public boolean getLoginStatus(){
         return isLogginSuccessful;
-    }
+    }*/
 
     /**
      * Method that performs RESTful webservice invocations
      *
-     * @param context
      */
-    protected void invokeWSLogin(final Context context) {
-  /*protected void invokeWSLogin(final Context context, String username, String password) {*/
+    protected void invokeWSLogin() {
 
         final UserLocalStore userLocalStore = new UserLocalStore(context);
 
@@ -65,7 +73,6 @@ public class WSLogin {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 userLocalStore.setUserLogInStatus(true);
-                isLogginSuccessful = true;
 
                 Log.i("WSLogin", "DailyPulse.onClick(): bLogin - clicked! now the getLoggedInUser() : " + userLocalStore.getLoggedInUser());
 
@@ -82,6 +89,7 @@ public class WSLogin {
                     Log.e("WSLogin", "DailyPulse.onClick(): bLogin - clicked! Error Occurred [Server's JSON response might be invalid: " + e.toString());
                     e.printStackTrace();
                 }
+                invokeWSGetSites();
                 return;
             }
 
@@ -105,8 +113,8 @@ public class WSLogin {
                 }
                 // When Http response code other than 404, 500
                 else {
-                    Toast.makeText(context, "Unexpected Error occcured with code " + statusCode + ". [Most common Error: Device might not be connected to Internet or remote server is not up and running]", Toast.LENGTH_LONG).show();
-                    Log.e("WSLogin", "Unexpected Error occcured with code " + statusCode + ". [Most common Error: Device might not be connected to Internet or remote server is not up and running]");
+                    Toast.makeText(context, "Unexpected Error occcured with code " + statusCode + ". [Most common Error: Device might be disconnected from the Internet or remote server is not up and running]", Toast.LENGTH_LONG).show();
+                    Log.e("WSLogin", "Unexpected Error occcured with code " + statusCode + ". [Most common Error: Device might might be disconnected from the Internet or remote server is not up and running]");
                 }
                 return;
             }
@@ -116,11 +124,111 @@ public class WSLogin {
                 Log.i("WSLogin", "DailyPulse.onClick(): Step 6c - response is:\t" + errorResponse);
                 Log.e("WSLogin", "DailyPulse.onClick(): bLogin - clicked! Error code in response from the server: " + statusCode);
 
-                Toast.makeText(context, "Unexpected Error occurred with code " + statusCode + ". [Most common Error: Device might not be connected to Internet or remote server is not up and running]", Toast.LENGTH_LONG).show();
-                Log.e("WSLogin", "Unexpected Error occurred with code " + statusCode + ". [Most common Error: Device might not be connected to Internet or remote server is not up and running]");
+                Toast.makeText(context, "Unexpected Error occurred with code " + statusCode + ". [Most common Error: Device might be disconnected from the Internet or remote server is not up and running]", Toast.LENGTH_LONG).show();
+                Log.e("WSLogin", "Unexpected Error occurred with code " + statusCode + ". [Most common Error: Device might be disconnected from the Internet or remote server is not up and running]");
                 return;
             }
         });
         return;
+    }
+
+    protected void invokeWSGetSites() {
+        AsyncHttpClient client = new AsyncHttpClient();
+
+        final UserLocalStore userLocalStore = new UserLocalStore(context);
+
+        String URL_GET_SITES = userLocalStore.getUrlGetSites();
+        String SECRET_ACCESS_KEY = userLocalStore.getSecretAccessKey();
+        String  ACCESS_KEY_ID = userLocalStore.getAccessKeyId();
+        String URL_API_ENDPOINT = userLocalStore.getUrlApiEndpoint();
+
+        String signature_mood;
+        try {
+            signature_mood = URLSigner.sign(URL_GET_SITES, SECRET_ACCESS_KEY);
+            Log.v("LoginActivity", "DailyPulse.GetMoodKpi signature result: " + signature_mood);
+        } catch (Exception e) {
+            Log.e("LoginActivity", "DailyPulse: signing problem!" + e.toString());
+            return;
+        }
+
+        client.addHeader("X-Celpax-Access-Key-Id", ACCESS_KEY_ID);
+        client.addHeader("X-Celpax-Signature", signature_mood);
+
+        client.get(URL_API_ENDPOINT + URL_GET_SITES, new JsonHttpResponseHandler() {
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
+                // Hide Progress Dialog
+                /*prgDialog.hide();*/
+                Log.i("LoginActivity", "DailyPulse - Success " +
+                        "response from the server: " + statusCode + "\nand response is:\t" +
+                        response.toString());
+
+                userLocalStore.setSiteIDs(response);
+
+                navigateToDeclareSiteActivity();
+/*
+                Intent declareSiteIntent = new Intent(context, DeclareSite.class);
+                declareSiteIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(declareSiteIntent);
+*/
+            }
+
+            // When the response returned by REST has Http response code other than '200'
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable
+                    e, org.json.JSONObject errorResponse) {
+                // Hide Progress Dialog
+                /*prgDialog.hide();*/
+                Log.w("ResultActivity", "DailyPulse.onClick(): OnFailure - clicked! Error code in response from the server: "
+                        + statusCode + "\n, errorResponse:\t" + errorResponse);
+
+                if (statusCode == 404) {
+                    Toast.makeText(context, "Requested resource not found", Toast.LENGTH_LONG).show();
+                } else if (statusCode == 500) {
+                    Toast.makeText(context, "Something went wrong at the server's end", Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(context, "Unexpected error occurred with code " + statusCode + ". [Most common Error: Device might not be connected to Internet or remote server is not up and running]", Toast.LENGTH_LONG).show();
+                    Log.e("ResultActivity", "Unexpected Error occurred with code " + statusCode + ".");
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable
+                    throwable, JSONArray errorResponse) {
+                /*prgDialog.hide();*/
+                Log.w("LoginActivity", "DailyPulse - OnFailure: Error code in response from the server: "
+                        + statusCode + "\n, errorResponse:\t" + errorResponse);
+                super.onFailure(statusCode, headers, throwable, errorResponse);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String
+                    responseString, Throwable throwable) {
+                /*prgDialog.hide();*/
+                Log.w("LoginActivity", "DailyPulse - OnFailure: Error code in response from the server: "
+                        + statusCode + "\n, errorResponse:\t" + responseString);
+                super.onFailure(statusCode, headers, responseString, throwable);
+
+            }
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, String responseString) {
+                /*prgDialog.hide();*/
+                super.onSuccess(statusCode, headers, responseString);
+            }
+        });
+    }
+
+    /**
+     * Method which navigates from Login Activity to Home Activity
+     */
+    public void navigateToDeclareSiteActivity() {
+        /*Intent resultIntent = new Intent(context, DeclareSite.class);*/
+
+        /*startActivity(new Intent(context, DeclareSite.class));*/
+        Intent intent = new Intent(context, DeclareSite.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(intent);
     }
 }

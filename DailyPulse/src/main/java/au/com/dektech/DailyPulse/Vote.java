@@ -232,8 +232,8 @@ public class Vote extends AppCompatActivity {
             @Override
             public void onClick(final View view) {
                 view.clearAnimation();
-                WSLogin wsLogin = new WSLogin();
-                wsLogin.invokeWSLogin(getApplicationContext());
+                WSLogin wsLogin = new WSLogin(getApplicationContext());
+                wsLogin.invokeWSLogin();
             }
         });
     }

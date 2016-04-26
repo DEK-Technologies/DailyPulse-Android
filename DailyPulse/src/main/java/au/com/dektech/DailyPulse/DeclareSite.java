@@ -26,6 +26,12 @@ public class DeclareSite extends AppCompatActivity implements View.OnClickListen
         setContentView(R.layout.activity_site_declaration);
         userLocalStore = new UserLocalStore(this);
 
+        if (!userLocalStore.getUserCategory().equals("")) {
+            Intent intent = new Intent(this, Result.class);
+            finish();
+            startActivity(intent);
+        }
+
         bSubmit = (Button) findViewById(R.id.bSubmit);
 
         bSubmit.setOnClickListener(this);
@@ -43,8 +49,9 @@ public class DeclareSite extends AppCompatActivity implements View.OnClickListen
         prgDialog.setMessage("Submitting mood...");
         prgDialog.show();
 
-        Log.i("LoginActivity", "DailyPulse.onClick(): bLogin - clicked! Step 1");
+        Log.i("DeclareSiteActivity", "DailyPulse.onClick(): bLogin - clicked! Step 1");
 
+        //TODO: Make below generic once API version 2 is out.
         radioCountryId = (RadioGroup) findViewById(R.id.radioCountry);
         radioOfficeId = (RadioGroup) findViewById(R.id.radioOffice);
         int selectedCountryOption = radioCountryId.getCheckedRadioButtonId();
@@ -63,14 +70,12 @@ public class DeclareSite extends AppCompatActivity implements View.OnClickListen
                 userLocalStore.setUserCategory("DEK Sweden");
             } else userLocalStore.setUserCategory("Sweden Mobile Employees");
         }
-        Log.i("LoginActivity", "DailyPulse.onClick(): userLocalStore.getUserCategory(): "
+        Log.i("DeclareSiteActivity", "DailyPulse.onClick(): userLocalStore.getUserCategory(): "
                 + userLocalStore.getUserCategory());
 
         prgDialog.hide();
 
         if (userLocalStore.getUserLogInStatus() == true) {
-            User user = new User(null, null);
-            userLocalStore.storeUserData(user);
             Intent intent = new Intent(this, Result.class);
             startActivity(intent);
         }

@@ -37,6 +37,8 @@ public class UserLocalStore {
         spEditor.putString("USERNAME", user.username);
         spEditor.putString("PASSWORD", user.password);
         spEditor.commit();
+        Log.i("userLocalStore", "storeUserData() - USERNAME: " + userLocalDatabase.getString("USERNAME", "") + ", PASSWORD:" + userLocalDatabase.getString("PASSWORD", "") +
+        "\nAnd this was: ");
     }
 
     public void storeUserDataInString(String username, String password) {
@@ -52,14 +54,15 @@ public class UserLocalStore {
         String[] loggedInUserInStr = new String[2];
         loggedInUserInStr[0] = userLocalDatabase.getString("USERNAME", "");
         loggedInUserInStr[1] = userLocalDatabase.getString("PASSWORD", "");
+        Log.i("userLocalStore", "getLoggedInUserInString() - USERNAME: " + userLocalDatabase.getString("USERNAME", "") + ", PASSWORD:" + userLocalDatabase.getString("PASSWORD", ""));
         return loggedInUserInStr;
     }
-
 
     public User getLoggedInUser() {
         String username = userLocalDatabase.getString("USERNAME", "");
         String password = userLocalDatabase.getString("PASSWORD", "");
         User storedUser = new User(username, password);
+        Log.i("userLocalStore", "getLoggedInUser() - USERNAME: " + userLocalDatabase.getString("USERNAME", "") + ", PASSWORD:" + userLocalDatabase.getString("PASSWORD", ""));
         return storedUser;
     }
 
@@ -87,15 +90,15 @@ public class UserLocalStore {
         spEditor.putString("URL_VOTE", url_vote);
         spEditor.putString("URL_MOOD_KPI", url_mood_kpi);
         spEditor.commit();
-
     }
 
-    public void setUserLogInStatus(boolean logged_in_flag) {
+    public synchronized void setUserLogInStatus(boolean logged_in_flag) {
         SharedPreferences.Editor spEditor = userLocalDatabase.edit();
         spEditor.putBoolean("LOGGED_IN", logged_in_flag);
         spEditor.putString("LAST_VOTE_DATE", "");
         spEditor.putString("LAST_RESULT_FETCHING_DATE", "");
         spEditor.commit();
+        notifyAll();
     }
 
     public void setSubmissionDetails(String submission_id, String defaultSiteId) {
