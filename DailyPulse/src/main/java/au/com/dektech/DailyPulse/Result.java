@@ -295,6 +295,11 @@ public class Result extends AppCompatActivity {
         ArrayList<BarEntry> entries = new ArrayList<>();
         ArrayList<String> allSiteDescriptionsInShort = new ArrayList<>();
 
+        /*allSiteDescriptionsInShort.add("DVC");
+        allSiteDescriptionsInShort.add("DSO");
+        allSiteDescriptionsInShort.add("DVO");
+        allSiteDescriptionsInShort.add("DSC");*/
+
         allSiteDescriptions.clear();
         for (int i = 0; i < userLocalStore.getNumberOfSites(); i++) {
             entries.add(new BarEntry(Integer.parseInt(allKpiResults[i][3]), i));

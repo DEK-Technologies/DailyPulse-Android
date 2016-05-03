@@ -164,8 +164,12 @@ public class WSLogin extends Activity{
                 } else if (statusCode == 500) {
                     Toast.makeText(context, "Something went wrong at the server's end", Toast.LENGTH_LONG).show();
                 } else {
-                    Toast.makeText(context, "Unexpected error occurred with code " + statusCode + ". [Most common Error: Device might not be connected to Internet or remote server is not up and running]", Toast.LENGTH_LONG).show();
-                    Log.e("ResultActivity", "Unexpected Error occurred with code " + statusCode + ".");
+                    Toast.makeText(context, "Unexpected error occurred with code " + statusCode +
+                            ". [Most common Error: Device might be disconnected from the Internet" +
+                            " or maybe the remote server is not up and running]",
+                            Toast.LENGTH_LONG).show();
+                    Log.e("ResultActivity", "Unexpected Error occurred with code " + statusCode +
+                            ".");
                 }
             }
 

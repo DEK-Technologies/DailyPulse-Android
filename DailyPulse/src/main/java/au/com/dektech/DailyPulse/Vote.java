@@ -84,6 +84,7 @@ public class Vote extends AppCompatActivity {
                 prgDialog.setMessage("Submitting mood...");
                 JSONArray votesArray = userLocalStore.prepareVote(1);
                 Log.d("VoteActivity", "DailyPulse.onClick(): Happy vote - chosen! prepared voteArray: " + votesArray);
+                prgDialog.show();
                 invokeWSSubmitVotes(votesArray);
             }
         });
@@ -95,6 +96,7 @@ public class Vote extends AppCompatActivity {
                 prgDialog.setMessage("Submitting mood...");
                 JSONArray voteArray = userLocalStore.prepareVote(0);
                 Log.d("VoteActivity", "DailyPulse.onClick(): Sad vote - chosen! prepared voteArray: " + voteArray);
+                prgDialog.show();
                 invokeWSSubmitVotes(voteArray);
             }
         });
@@ -143,8 +145,6 @@ public class Vote extends AppCompatActivity {
      */
     protected void invokeWSSubmitVotes(final JSONArray votesArray) {
 
-        prgDialog.show();
-
         AsyncHttpClient client = new AsyncHttpClient();
 
         JSONObject jsonParams = new JSONObject();
@@ -156,7 +156,7 @@ public class Vote extends AppCompatActivity {
             signature_vote = URLSigner.sign(URL_VOTE, SECRET_ACCESS_KEY);
             Log.d("VoteActivity", "DailyPulse.vote signature result: " + signature_vote);
 
-            jsonParams.put("panelId", PANEL_ID);
+            /*jsonParams.put("panelId", PANEL_ID);*/
             jsonParams.put("submitionId", userLocalStore.getSubmissionId());
             jsonParams.put("votesArray", votesArray);
             entity = new StringEntity(jsonParams.toString());

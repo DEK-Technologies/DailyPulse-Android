@@ -39,6 +39,8 @@
     <small>
     <p><b>Developed by:</b> DEK Technologies Sweden AB.<br/></p>
 
+    <p><b>Version:</b> @string/versionName<br/></p>
+
     <p><b>Contact:</b> info-se@dektech.com.au<br/></p>
 
     <p><b>Copyright (&#169) 2016 DEK Technologies Sweden AB.</b>
